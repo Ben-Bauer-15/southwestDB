@@ -1,5 +1,18 @@
 from django.shortcuts import render, HttpResponse, redirect
 from django.views.decorators.csrf import csrf_exempt
+from html.parser import HTMLParser
+
+class MyParser(HTMLParser):
+    def handle_starttag(self, tag, attrs):
+        if tag == 'button':
+            for attr in attrs:
+                if attr[0] == 'aria-label':
+                    print(attr[1])
+
+    def handle_data(self, data):
+        # print(data)
+        pass
+    
 
 def index(request):
     return HttpResponse('Hello world!')
@@ -14,3 +27,16 @@ def test(request):
     else:
         print("error")
         return HttpResponse("error")
+
+
+def parserTest(request):
+    parser = MyParser()
+    with open('./apps/main/files/test.txt', 'r') as myfile:
+        data = myfile.read().replace('\n', '')
+    
+
+    parser.feed(data)
+    print(parser.getpos())
+
+
+    return HttpResponse("Success!")
