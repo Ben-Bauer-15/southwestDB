@@ -32,14 +32,20 @@ def test(request):
         return HttpResponse("error")
 
 
+@csrf_exempt
 def parserTest(request):
-    parser = MyParser()
-    with open('./apps/main/files/test.txt', 'r') as myfile:
-        data = myfile.read().replace('\n', '')
-    
+    if request.method == 'POST':
+        # parser = MyParser()
+        # print(request.POST['data'])
+        # f = open('./apps/main/files/test.txt', 'w')
+        # f.write(request.POST['data'])
+        # f.close()
+        # with open('./apps/main/files/test.txt', 'w') as myfile:
+        #     data = myfile.read().replace('\n', '')
 
-    parser.feed(data)
-    print(parser.getpos())
+
+        # parser.feed(request.POST['data'])
+        # print(parser.getpos())
 
 
-    return HttpResponse("Success!")
+        return HttpResponse("Success!")
